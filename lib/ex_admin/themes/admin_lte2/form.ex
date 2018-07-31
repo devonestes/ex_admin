@@ -296,13 +296,17 @@ defmodule ExAdmin.Theme.AdminLte2.Form do
                   div ".col-sm-10" do
                     select "##{ext_name}_#{f_name}#{error}.form-control", name: name do
                       for opt <- collection do
-                        cond do
-                          not is_nil(res) and Map.get(res, f_name) == opt ->
-                            option("#{opt}", value: escape_value(opt), selected: :selected)
+                        id = ExAdmin.Schema.get_id(opt)
+                        name = ExAdmin.Helpers.display_name(opt)
 
-                          true ->
-                            option("#{opt}", value: escape_value(opt))
-                        end
+                        selected =
+                          if is_nil(res) or "#{id}" != Map.get(res, f_name, "") do
+                            []
+                          else
+                            [selected: "selected"]
+                          end
+
+                        option(name, [{:value, "#{id}"} | selected])
                       end
                     end
 
