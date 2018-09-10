@@ -85,7 +85,9 @@ defmodule ExAdmin.Table do
 
           {f_name, opts} ->
             build_field(resource, conn, {f_name, Enum.into(opts, %{})}, fn contents, f_name ->
-              td(".td-#{parameterize(f_name)} #{contents}")
+              td ".td-#{parameterize(f_name)}" do
+                contents
+              end
             end)
         end
       end
@@ -111,7 +113,14 @@ defmodule ExAdmin.Table do
   end
 
   def do_panel(conn, columns \\ [], table_opts \\ [], output \\ [])
-  def do_panel(_conn, [], _table_opts, output), do: Enum.join(Enum.reverse(output))
+
+  def do_panel(_conn, [], _table_opts, output),
+    do:
+      output
+      |> Enum.reverse()
+      |> Enum.map(&Phoenix.HTML.safe_to_string(Phoenix.HTML.html_escape(&1)))
+      |> Enum.join()
+      |> Phoenix.HTML.raw()
 
   def do_panel(
         conn,
@@ -258,60 +267,68 @@ defmodule ExAdmin.Table do
   end
 
   def handle_contents(%Ecto.DateTime{} = dt, field_name) do
-    td class: to_class("td-", field_name) do
-      text(to_string(dt))
+    markup do
+      td class: to_class("td-", field_name) do
+        text(to_string(dt))
+      end
     end
   end
 
   def handle_contents(%DateTime{} = dt, field_name) do
-    td class: to_class("td-", field_name) do
-      text(to_string(dt))
+    markup do
+      td class: to_class("td-", field_name) do
+        text(to_string(dt))
+      end
     end
   end
 
   def handle_contents(%NaiveDateTime{} = dt, field_name) do
-    td class: to_class("td-", field_name) do
-      text(to_string(dt))
+    markup do
+      td class: to_class("td-", field_name) do
+        text(to_string(dt))
+      end
     end
   end
 
   def handle_contents(%Ecto.Time{} = dt, field_name) do
-    td class: to_class("td-", field_name) do
-      text(to_string(dt))
+    markup do
+      td class: to_class("td-", field_name) do
+        text(to_string(dt))
+      end
     end
   end
 
   def handle_contents(%Ecto.Date{} = dt, field_name) do
-    td class: to_class("td-", field_name) do
-      text(to_string(dt))
+    markup do
+      td class: to_class("td-", field_name) do
+        text(to_string(dt))
+      end
     end
   end
 
   def handle_contents(%Time{} = dt, field_name) do
-    td class: to_class("td-", field_name) do
-      text(to_string(dt))
+    markup do
+      td class: to_class("td-", field_name) do
+        text(to_string(dt))
+      end
     end
   end
 
   def handle_contents(%Date{} = dt, field_name) do
-    td class: to_class("td-", field_name) do
-      text(to_string(dt))
+    markup do
+      td class: to_class("td-", field_name) do
+        text(to_string(dt))
+      end
     end
   end
 
   def handle_contents(%{}, _field_name), do: []
 
-  def handle_contents(contents, field_name) when is_binary(contents) do
-    td to_class(".td-", field_name) do
-      text(contents)
-    end
-  end
-
-  def handle_contents({:safe, contents}, field_name) do
-    handle_contents(contents, field_name)
-  end
-
   def handle_contents(contents, field_name) do
-    td(to_class(".td-", field_name), contents)
+    markup do
+      td to_class(".td-", field_name) do
+        contents
+      end
+    end
   end
 end
