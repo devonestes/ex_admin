@@ -67,7 +67,7 @@ defmodule ExAdmin.Mixfile do
       {:cowboy, "~> 1.0"},
       {:inflex, "~> 1.7"},
       {:scrivener_ecto, "~> 1.1"},
-      {:xain, github: "jshmrtn/xain", branch: "xss_fix"},
+      {:xain, github: "smpallen99/xain", ref: "70c33b9c54fe8b44e429042f721685964cc79680"},
       {:csvlixir, "~> 1.0.0"},
       {:exactor, "~> 2.2.0"},
       {:ex_doc, "~> 0.11", only: :dev},
