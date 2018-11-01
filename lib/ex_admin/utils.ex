@@ -3,7 +3,6 @@ defmodule ExAdmin.Utils do
   A collection of utility functions.
   """
   require Logger
-  import Ecto.DateTime.Utils, only: [zero_pad: 2]
   import ExAdmin.Gettext
   @module Application.get_env(:ex_admin, :module)
 
@@ -384,5 +383,9 @@ defmodule ExAdmin.Utils do
   @doc false
   def use_authentication do
     false
+  end
+
+  def zero_pad(string, length) do
+    String.pad_leading(string, length, "0")
   end
 end
