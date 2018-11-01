@@ -66,7 +66,7 @@ defmodule ExAdmin.Mixfile do
       {:floki, "~> 0.8", only: :test},
       {:cowboy, "~> 1.0"},
       {:inflex, "~> 1.7"},
-      {:scrivener_ecto, "~> 1.1"},
+      {:scrivener_ecto, "~> 1.1 or ~> 2.0"},
       {:xain, "~> 0.6.2"},
       {:csvlixir, "~> 1.0.0"},
       {:exactor, "~> 2.2.0"},
