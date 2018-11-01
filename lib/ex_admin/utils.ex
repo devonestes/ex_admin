@@ -297,7 +297,7 @@ defmodule ExAdmin.Utils do
   def confirm_message, do: gettext("Are you sure you want to delete this?")
 
   @doc false
-  def to_datetime(%Ecto.DateTime{} = dt) do
+  def to_datetime(%{__struct__: Ecto.DateTime} = dt) do
     {:ok, {date, {h, m, s, _ms}}} = Ecto.DateTime.dump(dt)
     {date, {h, m, s}}
   end
