@@ -296,12 +296,6 @@ defmodule ExAdmin.Utils do
   @doc false
   def confirm_message, do: gettext("Are you sure you want to delete this?")
 
-  @doc false
-  def to_datetime(%{__struct__: Ecto.DateTime} = dt) do
-    {:ok, {date, {h, m, s, _ms}}} = Ecto.DateTime.dump(dt)
-    {date, {h, m, s}}
-  end
-
   def to_datetime(%DateTime{} = dt) do
     DateTime.to_naive(dt)
     |> NaiveDateTime.to_erl()
@@ -386,6 +380,6 @@ defmodule ExAdmin.Utils do
   end
 
   def zero_pad(string, length) do
-    String.pad_leading(string, length, "0")
+    String.pad_leading(to_string(string), length, "0")
   end
 end
