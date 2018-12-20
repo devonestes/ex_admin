@@ -50,7 +50,8 @@ defmodule ExAdmin.ResourceController do
         conn
         |> put_layout(false)
         |> put_status(403)
-        |> render(ExAdmin.ErrorView, "403.html")
+        |> put_view(ExAdmin.ErrorView)
+        |> render("403.html")
         |> halt
       end
 
